@@ -1,7 +1,9 @@
 # OpenDownload website
 
 The standalone product website for [OpenDownload](https://github.com/Lord-shaban/OpenDownload).
-It contains a landing page, actual product screenshots, documentation, blog,
+[Live website](https://opendownload-website.vercel.app/en) · [العربية](https://opendownload-website.vercel.app/ar)
+
+It contains a landing page, an interactive source guide, actual product screenshots, documentation, blog,
 security, privacy, changelog and community pages in English and Arabic.
 
 This is a **separate project**, served by Vercel. It has no downloader API,
@@ -34,7 +36,7 @@ pnpm audit --prod --audit-level high
 ```
 
 The browser suite covers desktop/mobile, both locales, theme persistence,
-preview controls, FAQ, documentation search, copy feedback, navigation,
+source details, motion pause, preview controls, FAQ, documentation search, copy feedback, navigation,
 all routes/canonicals, 404s, reduced motion and horizontal overflow.
 These website checks do not certify media-source uptime.
 
@@ -62,10 +64,11 @@ Never commit `.env*`, `.vercel`, generated OIDC tokens or deployment credentials
 - [Asset sources and generation prompts](docs/ASSETS.md)
 
 The logo is the text **OpenDownload.** only. Actual UI screenshots are separated
-from decorative generated glass artwork. Motion is finite and reduced-motion
-preferences are respected. No newsletter, invented metrics or third-party
+from decorative generated glass artwork. Two decorative hero cards float with a pause control; they stop outside the
+viewport and under reduced motion. Other motion is finite. No newsletter, invented metrics or third-party
 analytics scripts are added.
 
 MIT applies to this project's original code. Upstream fonts and libraries retain
-their own licenses. IBM Plex Sans Arabic is distributed under the SIL Open Font
-License; see `app/fonts/OFL.txt`. Geist retains its upstream font license.
+their own licenses. Manrope, DM Sans and Readex Pro use the SIL Open Font License; license notices
+are in `app/fonts/`. Geist Mono retains its upstream font license. Brand icons
+use Simple Icons (CC0). See [font provenance](docs/FONTS.md).

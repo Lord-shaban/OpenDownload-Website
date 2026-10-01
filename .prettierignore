@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.vercel/
+.data/
+.env*
+pnpm-lock.yaml
+next-env.d.ts
+app/fonts/
+public/
+test-results/
+playwright-report/
