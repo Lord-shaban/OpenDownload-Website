@@ -350,7 +350,7 @@ export function posts(l: Locale): Post[] {
       category: t("Source update", "تحديث المصادر"),
       title: t(
         "LinkedIn, Pinterest and Threads join OpenDownload.",
-        "LinkedIn وPinterest وThreads تنضم إلى OpenDownload."
+        "لينكدإن وبينترست وثريدز تنضم إلى أوبن داونلود."
       ),
       description: t(
         "Three new sources in the application code, with public access, real format choices and clear limits.",

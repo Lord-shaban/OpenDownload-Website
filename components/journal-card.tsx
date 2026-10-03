@@ -5,7 +5,15 @@ import { postDate, type Post } from "@/lib/content";
 import { href, text, type Locale } from "@/lib/site";
 import { SourceIcon } from "./brand-icons";
 
-export function PostCover({ post, locale }: { post: Post; locale: Locale }) {
+export function PostCover({
+  post,
+  locale,
+  eager = false,
+}: {
+  post: Post;
+  locale: Locale;
+  eager?: boolean;
+}) {
   const t = (en: string, ar: string) => text(locale, en, ar);
   return (
     <div className={`journal-image ${post.cover === "release" ? "" : "pale"}`}>
@@ -15,6 +23,7 @@ export function PostCover({ post, locale }: { post: Post; locale: Locale }) {
         width={1536}
         height={1024}
         sizes="(max-width: 800px) 94vw, 560px"
+        loading={eager ? "eager" : "lazy"}
       />
       {post.cover === "release" ? (
         <span className="image-wordmark" dir="ltr">

@@ -102,6 +102,10 @@ for (const locale of ["en", "ar"] as const) {
     await newest.click();
     await expect(page).toHaveURL(new RegExp(`/${locale}/blog/linkedin-pinterest-threads$`));
     await expect(page.locator(".prose")).toContainText("Threads");
+    await expect(page.locator(".article-cover img")).toHaveAttribute("loading", "eager");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      ar ? "لينكدإن وبينترست وثريدز" : "LinkedIn, Pinterest and Threads"
+    );
     await expect(page.locator(".article-meta time")).toHaveAttribute("datetime", "2026-10-03");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true

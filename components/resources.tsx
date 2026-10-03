@@ -239,7 +239,7 @@ export function BlogPost({ locale, article }: { locale: Locale; article: Post })
         </div>
       </div>
       <div className="article-cover">
-        <PostCover post={article} locale={locale} />
+        <PostCover post={article} locale={locale} eager />
       </div>
       <ArticleBody locale={locale} article={article} />
       <div className="article-source">
