@@ -24,6 +24,7 @@ export const routes = [
   "docs/troubleshooting",
   "docs/contributing",
   "blog",
+  "blog/linkedin-pinterest-threads",
   "blog/introducing-0-1",
   "blog/a-quieter-workspace",
   "security",

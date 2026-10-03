@@ -152,7 +152,14 @@ export function MediaScene({ locale }: { locale: Locale }) {
   );
 }
 
-const sources: { id: SourceId; name: string; en: string; ar: string; tested: boolean }[] = [
+const sources: {
+  id: SourceId;
+  name: string;
+  en: string;
+  ar: string;
+  tested: boolean;
+  current?: boolean;
+}[] = [
   {
     id: "tiktok",
     name: "TikTok",
@@ -187,6 +194,30 @@ const sources: { id: SourceId; name: string; en: string; ar: string; tested: boo
     en: "Public media posts. Available video and audio depend on the source formats and host access.",
     ar: "منشورات الوسائط العامة. يعتمد الفيديو والصوت المتاحان على صيغ المصدر وإمكانية وصول المضيف.",
     tested: false,
+  },
+  {
+    id: "linkedin",
+    name: "LinkedIn",
+    en: "Public video posts and activity links, including lnkd.in redirects. Learning courses, private posts and sign-in-only videos are excluded. Build from current source for this addition.",
+    ar: "منشورات الفيديو العامة وروابط النشاط، بما فيها اختصارات lnkd.in. دورات Learning والمنشورات الخاصة والفيديوهات التي تتطلب تسجيل الدخول غير متاحة. شغّل أحدث كود للاستفادة من الإضافة.",
+    tested: true,
+    current: true,
+  },
+  {
+    id: "pinterest",
+    name: "Pinterest",
+    en: "Public video pins and original single-image pins, including pin.it links and regional Pinterest domains. Full boards and story galleries are excluded. Build from current source for this addition.",
+    ar: "دبابيس الفيديو العامة ودبابيس الصور المفردة الأصلية، بما فيها روابط pin.it ونطاقات Pinterest الإقليمية. اللوحات الكاملة ومعارض القصص غير متاحة. شغّل أحدث كود للاستفادة من الإضافة.",
+    tested: true,
+    current: true,
+  },
+  {
+    id: "threads",
+    name: "Threads",
+    en: "Public posts on threads.com and threads.net with media exposed in page data. Single videos, images and image-only collections up to 20 items. Login-gated posts and mixed/video carousels are excluded. Build from current source for this addition.",
+    ar: "المنشورات العامة على threads.com وthreads.net التي تتيح بيانات الوسائط في الصفحة. فيديو مفرد وصور ومجموعات صور فقط حتى 20 صورة. المنشورات التي تتطلب تسجيل الدخول والمجموعات المختلطة أو متعددة الفيديوهات غير متاحة. شغّل أحدث كود للاستفادة من الإضافة.",
+    tested: true,
+    current: true,
   },
   {
     id: "vimeo",
@@ -228,8 +259,8 @@ export function SourceExplorer({ locale }: { locale: Locale }) {
         </div>
         <p className="sources-intro">
           {t(
-            "Choose a source to see what v0.1 can handle. Public content only; availability depends on the link and host.",
-            "اختر مصدرًا لمعرفة ما يتيحه الإصدار 0.1. للمحتوى العام فقط؛ التوفر يعتمد على الرابط والمضيف."
+            "LinkedIn, Pinterest and Threads join the source guide. Public content only; new adapters require the latest application source.",
+            "LinkedIn وPinterest وThreads تنضم إلى دليل المصادر. للمحتوى العام فقط؛ الأدوات الجديدة تحتاج أحدث كود للتطبيق."
           )}
         </p>
       </div>
@@ -256,9 +287,11 @@ export function SourceExplorer({ locale }: { locale: Locale }) {
               <span className="source-content-type">
                 {item.id === "soundcloud"
                   ? t("Public audio", "صوت عام")
-                  : item.id === "direct"
-                    ? t("Video, audio & images", "فيديو وصوت وصور")
-                    : t("Public video", "فيديو عام")}
+                  : item.id === "pinterest" || item.id === "threads"
+                    ? t("Video & images", "فيديو وصور")
+                    : item.id === "direct"
+                      ? t("Video, audio & images", "فيديو وصوت وصور")
+                      : t("Public video", "فيديو عام")}
               </span>
               <small>
                 <i className={item.tested ? "tested-dot" : "conditional-dot"} />
@@ -291,7 +324,9 @@ export function SourceExplorer({ locale }: { locale: Locale }) {
             </strong>
             <span className={source.tested ? "source-status tested" : "source-status"}>
               {source.tested
-                ? t("Sample tested on v0.1", "عينة مختبرة على 0.1")
+                ? source.current
+                  ? t("Current source tested", "اختُبر الكود الجديد")
+                  : t("Sample tested on v0.1", "عينة مختبرة على 0.1")
                 : t("Adapter available", "أداة استخراج متاحة")}
             </span>
           </div>

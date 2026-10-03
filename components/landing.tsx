@@ -19,6 +19,8 @@ import { Showcase, CopyCode } from "./interactive";
 import { Action, TextLink, Brand } from "./site-shell";
 import { GitHubIcon } from "./brand-icons";
 import { MediaScene, SourceExplorer } from "./product-scenes";
+import { posts } from "@/lib/content";
+import { JournalCard } from "./journal-card";
 
 export function Landing({ locale }: { locale: Locale }) {
   const t = (en: string, ar: string) => text(locale, en, ar);
@@ -79,11 +81,11 @@ export function Landing({ locale }: { locale: Locale }) {
     <>
       <section className="hero container">
         <div className="hero-copy">
-          <Link href={href(locale, "changelog")} className="release-badge">
+          <Link href={href(locale, "blog/linkedin-pinterest-threads")} className="release-badge">
             <span className="badge-dot" />
             <span>OpenDownload 0.1</span>
             <span className="badge-divider" />
-            <span>{t("First public release", "الإصدار العام الأول")}</span>
+            <span>{t("LinkedIn · Pinterest · Threads", "LinkedIn · Pinterest · Threads")}</span>
             <ArrowRight size={14} aria-hidden="true" className="directional" />
           </Link>
           <h1>
@@ -337,61 +339,11 @@ export function Landing({ locale }: { locale: Locale }) {
           <TextLink locale={locale} path="blog" label={t("All articles", "كل المقالات")} />
         </div>
         <div className="journal-grid">
-          <Link className="journal-card reveal" href={href(locale, "blog/introducing-0-1")}>
-            <div className="journal-image">
-              <Image
-                src="/images/open-glass.png"
-                alt=""
-                width={1536}
-                height={1024}
-                sizes="(max-width: 800px) 94vw, 550px"
-              />
-              <span className="image-wordmark" dir="ltr">
-                OpenDownload<span>.</span>
-                <small>0.1</small>
-              </span>
-            </div>
-            <div className="journal-meta">
-              <span>{t("Release notes", "إصدارات")}</span>
-              <time dateTime="2026-10-01">{t("Oct 1, 2026", "1 أكتوبر 2026")}</time>
-            </div>
-            <h3>
-              {t(
-                "OpenDownload 0.1: downloads, formats and release boundaries.",
-                "OpenDownload 0.1: التنزيل والصيغ وحدود الإصدار."
-              )}
-            </h3>
-            <span className="read-story">
-              {t("Read article", "اقرأ المقال")}
-              <ArrowRight size={16} aria-hidden="true" className="directional" />
-            </span>
-          </Link>
-          <Link className="journal-card reveal" href={href(locale, "blog/a-quieter-workspace")}>
-            <div className="journal-image pale">
-              <Image
-                src="/images/liquid-glass.png"
-                alt=""
-                width={1672}
-                height={941}
-                sizes="(max-width: 800px) 94vw, 550px"
-              />
-              <span className="design-cover">
-                {t("Link.", "رابط.")}
-                <em>{t("Format. File.", "صيغة. ملف.")}</em>
-              </span>
-            </div>
-            <div className="journal-meta">
-              <span>{t("Design notes", "ملاحظات التصميم")}</span>
-              <time dateTime="2026-10-01">{t("Oct 1, 2026", "1 أكتوبر 2026")}</time>
-            </div>
-            <h3>
-              {t("Designing the path from a link to a file.", "تصميم الرحلة من الرابط إلى الملف.")}
-            </h3>
-            <span className="read-story">
-              {t("Read article", "اقرأ المقال")}
-              <ArrowRight size={16} aria-hidden="true" className="directional" />
-            </span>
-          </Link>
+          {posts(locale)
+            .slice(0, 2)
+            .map((post) => (
+              <JournalCard key={post.slug} post={post} locale={locale} reveal />
+            ))}
         </div>
       </section>
       <section className="faq-section section container">

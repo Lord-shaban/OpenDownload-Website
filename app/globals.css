@@ -1417,6 +1417,14 @@ h2 {
   height: 100%;
   object-fit: cover;
 }
+.article-cover .journal-image {
+  height: 100%;
+  aspect-ratio: auto;
+}
+.release-badge {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
 .blog-article .prose {
   max-width: 680px;
   margin-inline: auto;
@@ -3534,6 +3542,38 @@ html[lang="ar"] .hero-description {
 }
 .brand-github {
   mask-image: url("/brands/github.svg");
+}
+.brand-linkedin {
+  mask-image: url("/brands/linkedin.svg");
+}
+.sources-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 28px;
+  color: #252332;
+  font-size: 24px;
+  font-weight: 700;
+}
+.sources-cover > span {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.brand-pinterest {
+  mask-image: url("/brands/pinterest.svg");
+}
+.brand-threads {
+  mask-image: url("/brands/threads.svg");
+}
+.source-linkedin .source-logo {
+  color: #0a66c2;
+}
+.source-pinterest .source-logo {
+  color: #bd081c;
 }
 .source-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));

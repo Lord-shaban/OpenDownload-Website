@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -13,7 +12,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { APP_URL, REPO_URL, RELEASE_URL, href, text, type Locale } from "@/lib/site";
-import { docArticles, posts, type Article } from "@/lib/content";
+import { docArticles, posts, postDate, type Article, type Post } from "@/lib/content";
+import { JournalCard, PostCover } from "./journal-card";
 import { CopyCode, DocsSearch } from "./interactive";
 
 export function ArticleBody({ article, locale }: { article: Article; locale: Locale }) {
@@ -203,39 +203,8 @@ export function BlogIndex({ locale }: { locale: Locale }) {
         )}
       />
       <div className="journal-grid blog-grid">
-        {posts(locale).map((post, i) => (
-          <Link className="journal-card" href={href(locale, `blog/${post.slug}`)} key={post.slug}>
-            <div className={`journal-image ${i === 1 ? "pale" : ""}`}>
-              <Image
-                src={i === 0 ? "/images/open-glass.png" : "/images/liquid-glass.png"}
-                alt=""
-                width={1536}
-                height={1024}
-                sizes="(max-width: 800px) 94vw, 560px"
-              />
-              {i === 0 ? (
-                <span className="image-wordmark" dir="ltr">
-                  OpenDownload<span>.</span>
-                  <small>0.1</small>
-                </span>
-              ) : (
-                <span className="design-cover">
-                  {t("Link.", "رابط.")}
-                  <em>{t("Format. File.", "صيغة. ملف.")}</em>
-                </span>
-              )}
-            </div>
-            <div className="journal-meta">
-              <span>{post.category}</span>
-              <time dateTime="2026-10-01">{t("Oct 1, 2026", "1 أكتوبر 2026")}</time>
-            </div>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <span className="read-story">
-              {t("Read story", "اقرأ المقال")}
-              <ArrowRight size={16} aria-hidden="true" className="directional" />
-            </span>
-          </Link>
+        {posts(locale).map((post) => (
+          <JournalCard key={post.slug} post={post} locale={locale} />
         ))}
       </div>
       <div className="blog-bottom">
@@ -253,7 +222,7 @@ export function BlogIndex({ locale }: { locale: Locale }) {
     </div>
   );
 }
-export function BlogPost({ locale, article }: { locale: Locale; article: Article }) {
+export function BlogPost({ locale, article }: { locale: Locale; article: Post }) {
   const t = (en: string, ar: string) => text(locale, en, ar);
   return (
     <article className="blog-article container">
@@ -266,31 +235,15 @@ export function BlogPost({ locale, article }: { locale: Locale; article: Article
         <p>{article.description}</p>
         <div className="article-meta">
           <span>{t("OpenDownload project", "مشروع OpenDownload")}</span>
-          <time dateTime="2026-10-01">{t("October 1, 2026", "1 أكتوبر 2026")}</time>
+          <time dateTime={article.publishedAt}>{postDate(article.publishedAt, locale)}</time>
         </div>
       </div>
       <div className="article-cover">
-        <Image
-          src={
-            article.slug === "introducing-0-1"
-              ? "/images/open-glass.png"
-              : "/images/liquid-glass.png"
-          }
-          alt={t("Original generated glass editorial artwork", "عمل بصري أصلي مولّد من الزجاج")}
-          width={1536}
-          height={1024}
-          sizes="(max-width: 900px) 94vw, 850px"
-        />
+        <PostCover post={article} locale={locale} eager />
       </div>
       <ArticleBody locale={locale} article={article} />
       <div className="article-source">
-        <a
-          href={
-            article.slug === "introducing-0-1"
-              ? RELEASE_URL
-              : `${REPO_URL}/blob/main/design-system/opendownload/pages/workspace.md`
-          }
-        >
+        <a href={article.source}>
           {t("Explore the source behind this story", "استكشف المصدر وراء هذا المقال")}
           <ArrowUpRight size={15} aria-hidden="true" />
         </a>
@@ -420,6 +373,24 @@ export function resourceArticle(locale: Locale, path: string): Article {
         "سجل واضح لما نُشر فعلًا. الإصدار الأول هو 0.1.0."
       ),
       sections: [
+        {
+          id: "social-sources",
+          title: t("Current source · October 3, 2026", "أحدث كود · 3 أكتوبر 2026"),
+          bullets: [
+            t(
+              "LinkedIn public videos, Pinterest video and single-image pins, and Threads public page media.",
+              "فيديوهات LinkedIn العامة، ودبابيس فيديو Pinterest وصوره المفردة، ووسائط صفحات Threads العامة."
+            ),
+            t(
+              "Short-link resolution, regional Pinterest domains, and original progressive video formats with incomplete codec metadata.",
+              "حل الروابط المختصرة ونطاقات Pinterest الإقليمية وصيغ الفيديو الأصلية التي تفتقد بعض معلومات الكودك."
+            ),
+          ],
+          note: t(
+            "Requires the current application source. Published v0.1.0 images retain their original scope; the website does not deploy the engine. Samples establish those links, not universal platform availability.",
+            "يتطلب أحدث كود للتطبيق. تحتفظ صور 0.1.0 بنطاقها الأصلي؛ لا ينشر الموقع المحرك. تثبت العينات تلك الروابط فقط، وليست ضمانًا لإتاحة كل منصة."
+          ),
+        },
         {
           id: "v010",
           title: "v0.1.0 · 2026-10-01",
