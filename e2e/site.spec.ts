@@ -24,7 +24,17 @@ for (const locale of ["en", "ar"] as const) {
     await expect(
       page.getByRole("button", { name: ar ? "تشغيل الحركة" : "Resume motion", exact: true })
     ).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator(".source-grid button")).toHaveCount(8);
+    await expect(page.locator(".source-grid button")).toHaveCount(11);
+    for (const source of ["linkedin", "pinterest", "threads"]) {
+      await page.locator(`.source-${source}`).click();
+      await expect(page.locator(`.source-${source}`)).toHaveAttribute("aria-pressed", "true");
+      await expect(page.locator("#source-detail")).toContainText(
+        ar ? "أحدث كود" : "current source"
+      );
+      await expect(page.locator("#source-detail .source-status")).toHaveText(
+        ar ? "اختُبر الكود الجديد" : "Current source tested"
+      );
+    }
     await page.locator(".source-soundcloud").click();
     await expect(page.locator("#source-detail")).toContainText("NASA");
     await expect(page.locator(".source-soundcloud")).toHaveAttribute("aria-pressed", "true");
@@ -78,6 +88,27 @@ for (const locale of ["en", "ar"] as const) {
     await page.getByRole("button", { name: ar ? "نسخ الأمر" : "Copy command" }).click();
     await expect(page.locator(".code-block").getByRole("status")).toContainText(
       /copied|تم نسخ|Select|تعذر/
+    );
+  });
+  test(`${locale}: source announcement, publication dates and article metadata`, async ({
+    page,
+    request,
+  }) => {
+    await page.goto(`/${locale}/blog`);
+    const newest = page.locator(".journal-card").first();
+    await expect(newest).toContainText("LinkedIn");
+    await expect(newest.locator("time")).toHaveAttribute("datetime", "2026-10-03");
+    await expect(page.locator('.journal-card time[datetime="2026-10-01"]')).toHaveCount(2);
+    await newest.click();
+    await expect(page).toHaveURL(new RegExp(`/${locale}/blog/linkedin-pinterest-threads$`));
+    await expect(page.locator(".prose")).toContainText("Threads");
+    await expect(page.locator(".article-meta time")).toHaveAttribute("datetime", "2026-10-03");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+      true
+    );
+    const response = await request.get(`/${locale}/blog/linkedin-pinterest-threads`);
+    expect(await response.text()).toContain(
+      'property="article:published_time" content="2026-10-03T00:00:00Z"'
     );
   });
   test(`${locale}: no overflow, working routes, metadata and reduced motion`, async ({

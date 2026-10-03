@@ -45,6 +45,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       "A free, open-source media workspace. Paste a public link, choose a real format, save it. No ads or accounts. YouTube is excluded from v0.1.",
       "مساحة وسائط مجانية ومفتوحة المصدر. ألصق رابطًا عامًا واختر صيغة فعلية واحفظه. بلا إعلانات أو حسابات. YouTube غير مدعوم في 0.1."
     );
+  const post = path.startsWith("blog/")
+    ? posts(locale).find((item) => item.slug === slug?.[1])
+    : undefined;
   return {
     metadataBase: new URL(SITE_URL),
     title,
@@ -66,7 +69,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       description,
       url: href(locale, path),
       locale: locale === "ar" ? "ar" : "en_US",
-      type: path.startsWith("blog/") ? "article" : "website",
+      ...(post
+        ? {
+            type: "article" as const,
+            publishedTime: `${post.publishedAt}T00:00:00Z`,
+            authors: ["OpenDownload project"],
+          }
+        : { type: "website" as const }),
     },
     twitter: {
       card: "summary_large_image",

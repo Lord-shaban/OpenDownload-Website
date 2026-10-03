@@ -1,5 +1,13 @@
 # Asset provenance
 
+## Source update, October 3, 2026
+
+LinkedIn, Pinterest and Threads brand masks are unchanged Simple Icons 11.15.0
+SVGs (CC0), retrieved from the versioned npm package on jsDelivr:
+`https://cdn.jsdelivr.net/npm/simple-icons@11.15.0/icons/{linkedin,pinterest,threads}.svg`.
+They identify the sources; no affiliation is implied. The new article cover
+reuses `liquid-glass.png` with HTML source labels and these masks.
+
 ## Actual product captures
 
 Captured on 2026-10-01 using the in-app browser at

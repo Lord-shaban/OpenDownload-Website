@@ -15,6 +15,19 @@ export type Article = {
   category: string;
   sections: Section[];
 };
+export type Post = Article & {
+  publishedAt: string;
+  cover: "release" | "design" | "sources";
+  source: string;
+};
+export function postDate(date: string, locale: Locale) {
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar-EG" : "en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`));
+}
 const install = `git clone --branch v0.1.0 https://github.com/Lord-shaban/OpenDownload.git
 cd OpenDownload
 cp .env.example .env
@@ -148,10 +161,32 @@ export function docArticles(l: Locale): Article[] {
           title: t("Available source adapters", "أدوات المصادر المتاحة"),
           paragraphs: [
             t(
-              "The app lists Instagram, TikTok, X / Twitter, Facebook, Reddit, Vimeo and SoundCloud, plus public direct media links. These are available adapters, not a promise that every URL works. Availability depends on the post, region, upstream changes and hosting access.",
-              "يعرض التطبيق Instagram وTikTok وX / Twitter وFacebook وReddit وVimeo وSoundCloud، والروابط العامة المباشرة. هذه أدوات مصادر متاحة وليست وعدًا بأن كل رابط يعمل. يعتمد التوفر على المنشور والمنطقة وتغييرات المصدر وإمكانية الوصول من الاستضافة."
+              "The app lists Instagram, TikTok, X / Twitter, Facebook, Reddit, Vimeo and SoundCloud, plus public direct media links. Current application source adds LinkedIn, Pinterest and Threads. Build from source for the additions; the published v0.1.0 images retain their original scope. Availability depends on the post, region, upstream changes and hosting access.",
+              "يعرض التطبيق Instagram وTikTok وX / Twitter وFacebook وReddit وVimeo وSoundCloud والروابط المباشرة. يضيف أحدث كود للتطبيق LinkedIn وPinterest وThreads. شغّل نسخة مبنية من الكود لهذه الإضافات؛ صور 0.1.0 المنشورة تحتفظ بنطاقها الأصلي. يعتمد التوفر على المنشور والمنطقة وتغييرات المصدر وإمكانية الوصول من الاستضافة."
             ),
           ],
+        },
+        {
+          id: "new-sources",
+          title: t("LinkedIn, Pinterest and Threads", "LinkedIn وPinterest وThreads"),
+          bullets: [
+            t(
+              "LinkedIn: public video posts and activity links, including lnkd.in redirects. Learning courses and authenticated content are excluded.",
+              "LinkedIn: منشورات الفيديو العامة وروابط النشاط، بما فيها اختصارات lnkd.in. دورات Learning والمحتوى الذي يتطلب حسابًا غير متاحة."
+            ),
+            t(
+              "Pinterest: public video pins and original single-image pins, including pin.it and regional domains. Boards and story galleries are excluded.",
+              "Pinterest: دبابيس الفيديو العامة والصور المفردة الأصلية، بما فيها pin.it والنطاقات الإقليمية. اللوحات ومعارض القصص غير متاحة."
+            ),
+            t(
+              "Threads: public post links on threads.com or threads.net with media in page JSON. Single videos, images and image-only collections up to 20 items. Login walls and mixed/video carousels are unsupported.",
+              "Threads: روابط منشورات عامة على threads.com أو threads.net تتيح الوسائط في بيانات الصفحة. فيديو مفرد وصور ومجموعات صور فقط حتى 20 صورة. صفحات تسجيل الدخول والمجموعات المختلطة أو متعددة الفيديوهات غير مدعومة."
+            ),
+          ],
+          note: t(
+            "Public video samples downloaded from all three sources on the current application code. LinkedIn MP3 conversion, a Pinterest original image and a Threads four-image ZIP also passed real file, range and deletion checks. The source guide does not certify platform uptime or a deployed application version.",
+            "نُزّلت عينات فيديو عامة من المصادر الثلاثة على كود التطبيق الجديد. نجحت أيضًا اختبارات تحويل LinkedIn إلى MP3 وصورة Pinterest الأصلية وملف ZIP من أربع صور على Threads، مع التحقق من الملفات والتنزيل الجزئي والحذف. دليل المصادر لا يضمن إتاحة المنصة أو نسخة التطبيق المنشورة."
+          ),
         },
         {
           id: "verified",
@@ -304,11 +339,94 @@ export function docArticles(l: Locale): Article[] {
     },
   ];
 }
-export function posts(l: Locale): Article[] {
+export function posts(l: Locale): Post[] {
   const t = (en: string, ar: string) => text(l, en, ar);
   return [
     {
+      slug: "linkedin-pinterest-threads",
+      publishedAt: "2026-10-03",
+      cover: "sources",
+      source: "https://github.com/Lord-shaban/OpenDownload/blob/main/docs/SOCIAL_SOURCES.md",
+      category: t("Source update", "تحديث المصادر"),
+      title: t(
+        "LinkedIn, Pinterest and Threads join OpenDownload.",
+        "LinkedIn وPinterest وThreads تنضم إلى OpenDownload."
+      ),
+      description: t(
+        "Three new sources in the application code, with public access, real format choices and clear limits.",
+        "ثلاثة مصادر جديدة في كود التطبيق، بروابط عامة وصيغ فعلية وحدود واضحة."
+      ),
+      sections: [
+        {
+          id: "sources",
+          title: t("More places for your media", "مصادر أكثر لوسائطك"),
+          paragraphs: [
+            t(
+              "The current OpenDownload source adds LinkedIn public video posts, Pinterest video and single-image pins, and Threads posts whose public page includes media data. They appear in the workspace's supported-sites list and this website's source guide in both languages.",
+              "يضيف أحدث كود لـOpenDownload منشورات فيديو LinkedIn العامة ودبابيس الفيديو والصور المفردة على Pinterest ومنشورات Threads التي تتضمن صفحاتها العامة بيانات الوسائط. تظهر المصادر في قائمة المواقع المدعومة داخل التطبيق ودليل المصادر في الموقع باللغتين."
+            ),
+          ],
+        },
+        {
+          id: "links",
+          title: t("Use the post's own link", "استخدم رابط المنشور نفسه"),
+          bullets: [
+            t(
+              "LinkedIn accepts public /posts/ and /feed/update/ links, plus lnkd.in redirects. Paid Learning courses and account-only content stay outside scope.",
+              "يقبل LinkedIn روابط /posts/ و/feed/update/ العامة واختصارات lnkd.in. تظل دورات Learning المدفوعة والمحتويات التي تتطلب حسابًا خارج النطاق."
+            ),
+            t(
+              "Pinterest accepts individual /pin/ URLs on regional domains and pin.it redirects. Video formats come from the extractor; single-image pins use the original image returned by Pinterest. Full boards are excluded.",
+              "يقبل Pinterest روابط /pin/ المفردة على النطاقات الإقليمية واختصارات pin.it. تأتي صيغ الفيديو من المستخرج؛ وتستخدم دبابيس الصور المفردة الصورة الأصلية التي يعيدها Pinterest. اللوحات الكاملة غير متاحة."
+            ),
+            t(
+              "Threads accepts @user/post links on threads.com and threads.net, and share links that redirect to a post. Single videos and images are supported; image-only collections are capped at 20. Mixed or multiple-video carousels are excluded.",
+              "يقبل Threads روابط @user/post على threads.com وthreads.net وروابط المشاركة التي تحوّل إلى منشور. تُدعم الفيديوهات والصور المفردة، ومجموعات الصور فقط حتى 20 صورة. المجموعات المختلطة أو متعددة الفيديوهات غير متاحة."
+            ),
+          ],
+        },
+        {
+          id: "formats",
+          title: t("Keep the source honest", "الصيغ كما يتيحها المصدر"),
+          paragraphs: [
+            t(
+              "Some sources provide MP4 files without reporting codecs or dimensions. OpenDownload now preserves these original files. It shows a resolution only when reported, and describes MP3 conversion as requiring an audio track when audio metadata is missing. A missing field no longer hides an available video.",
+              "تتيح بعض المصادر ملفات MP4 دون معلومات الكودك أو الأبعاد. يحتفظ OpenDownload الآن بخيار الملف الأصلي. يعرض الدقة عندما يذكرها المصدر فقط، ويوضح أن تحويل MP3 يتطلب مسارًا صوتيًا عند غياب معلومات الصوت. لم يعد غياب حقل يخفي فيديو متاحًا."
+            ),
+          ],
+        },
+        {
+          id: "access",
+          title: t("Public access remains the boundary", "الوصول العام يظل الحد"),
+          paragraphs: [
+            t(
+              "The adapters use the existing guarded outbound proxy and bounded metadata reads. Threads requests the public search-preview representation with a crawler-compatible User-Agent and matches the requested post's code. This representation can change. No login cookies, challenge solving or watermark removal is added. A public URL can still be inaccessible from a particular host.",
+              "تستخدم الأدوات وكيل الشبكة المحمي الحالي وحدودًا لحجم بيانات المصدر. يطلب Threads نسخة المعاينة العامة لمحركات البحث بترويسة User-Agent متوافقة مع الزواحف، ويطابق رمز المنشور المطلوب. قد تتغير هذه النسخة. لا نضيف ملفات جلسات تسجيل الدخول أو حل تحديات التحقق أو إزالة العلامات المائية. قد يظل الرابط العام غير متاح من مضيف معين."
+            ),
+          ],
+          note: t(
+            "Real public video downloads passed on the current source: LinkedIn (5,602,080 bytes), Pinterest (18,403,864 bytes) and Threads (4,366,338 bytes). LinkedIn MP3 conversion, a Pinterest original image and a Threads four-image ZIP also passed. FFprobe verified media files; archive contents, HTTP ranges and deletion were checked through the guarded proxy. See the repository's verification record for samples, hashes and exact limits.",
+            "نجحت تنزيلات فيديو عامة فعلية على الكود الجديد: LinkedIn بحجم 5,602,080 بايت وPinterest بحجم 18,403,864 بايت وThreads بحجم 4,366,338 بايت. نجح أيضًا تحويل LinkedIn إلى MP3 وتنزيل صورة Pinterest الأصلية وملف ZIP من أربع صور على Threads. تحقّق FFprobe من ملفات الوسائط، وفُحصت محتويات الأرشيف والتنزيل الجزئي والحذف عبر الوكيل المحمي. راجع سجل التحقق في المستودع للعينات والبصمات والحدود الدقيقة."
+          ),
+        },
+        {
+          id: "source",
+          title: t("Run the current application source", "شغّل أحدث كود للتطبيق"),
+          paragraphs: [
+            t(
+              "These additions belong to the current source, not the immutable v0.1.0 container release. Build the application from main to use them. Updating this website does not deploy the download engine or certify the public app's running revision.",
+              "هذه الإضافات موجودة في أحدث كود، وليست ضمن حاويات إصدار 0.1.0 الثابتة. ابنِ التطبيق من main لاستخدامها. تحديث الموقع لا ينشر محرك التنزيل ولا يثبت نسخة الكود التي يشغّلها التطبيق العام."
+            ),
+          ],
+          code: "git clone https://github.com/Lord-shaban/OpenDownload.git\ncd OpenDownload\ncp .env.example .env\ndocker compose up --build",
+        },
+      ],
+    },
+    {
       slug: "introducing-0-1",
+      publishedAt: "2026-10-01",
+      cover: "release",
+      source: "https://github.com/Lord-shaban/OpenDownload/releases/tag/v0.1.0",
       category: t("Release notes", "إصدارات"),
       title: t(
         "OpenDownload 0.1: downloads, formats and release boundaries.",
@@ -363,6 +481,10 @@ export function posts(l: Locale): Article[] {
     },
     {
       slug: "a-quieter-workspace",
+      publishedAt: "2026-10-01",
+      cover: "design",
+      source:
+        "https://github.com/Lord-shaban/OpenDownload/blob/main/design-system/opendownload/pages/workspace.md",
       category: t("Design notes", "ملاحظات التصميم"),
       title: t("Designing the path from a link to a file.", "تصميم الرحلة من الرابط إلى الملف."),
       description: t(

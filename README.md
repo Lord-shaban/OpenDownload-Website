@@ -11,6 +11,11 @@ extractor, download storage or dependency on the application's workspace.
 The Open app action opens [the real application](https://opendownload.lord.blitz.cloud/).
 YouTube remains outside OpenDownload v0.1.
 
+The source guide now includes LinkedIn, Pinterest and Threads, with a bilingual
+[announcement](https://opendownload-website.vercel.app/en/blog/linkedin-pinterest-threads)
+dated October 3, 2026. These adapters require the current application source;
+the website does not deploy the downloader and does not change v0.1.0 images.
+
 ## Develop
 
 Node.js 24 and pnpm 11.25.0:
@@ -20,9 +25,12 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://127.0.0.1:3100. All 28 content routes are generated at build time.
+Open http://127.0.0.1:3100. All 30 content routes are generated at build time.
 English is `/en`, Arabic is `/ar`; switching language preserves the current page.
 Content lives in `lib/content.ts`, resource pages in `components/resources.tsx`.
+Blog posts carry their own publication dates, cover choices and source links.
+`components/journal-card.tsx` renders the same post data on the landing page and
+blog index; article metadata and the sitemap include the new bilingual routes.
 
 ## Verify
 
