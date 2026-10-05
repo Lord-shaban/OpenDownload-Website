@@ -7,6 +7,7 @@ export type Section = {
   bullets?: string[];
   code?: string;
   note?: string;
+  image?: { src: string; alt: string; caption: string; width: number; height: number };
 };
 export type Article = {
   slug: string;
@@ -370,6 +371,19 @@ export function posts(l: Locale): Post[] {
         {
           id: "links",
           title: t("Use the post's own link", "استخدم رابط المنشور نفسه"),
+          image: {
+            src: "/images/photo-studio-v2.webp",
+            width: 1536,
+            height: 1024,
+            alt: t(
+              "Original editorial photograph of two photographic prints",
+              "صورة تحريرية أصلية لصورتين مطبوعتين"
+            ),
+            caption: t(
+              "Single images and image-only collections are part of the current source.",
+              "الصور المفردة ومجموعات الصور من إمكانات الكود الحالي."
+            ),
+          },
           bullets: [
             t(
               "LinkedIn accepts public /posts/ and /feed/update/ links, plus lnkd.in redirects. Paid Learning courses and account-only content stay outside scope.",
@@ -388,6 +402,19 @@ export function posts(l: Locale): Post[] {
         {
           id: "formats",
           title: t("Keep the source honest", "الصيغ كما يتيحها المصدر"),
+          image: {
+            src: "/images/workspace-audio-v2.jpg",
+            width: 1065,
+            height: 927,
+            alt: t(
+              "Real audio format selection for a public LinkedIn video in OpenDownload",
+              "اختيار صيغة الصوت لفيديو LinkedIn عام في OpenDownload الفعلي"
+            ),
+            caption: t(
+              "LinkedIn audio selection in the live application, October 2026.",
+              "اختيار الصوت من LinkedIn في التطبيق الفعلي، أكتوبر 2026."
+            ),
+          },
           paragraphs: [
             t(
               "Some sources provide MP4 files without reporting codecs or dimensions. OpenDownload now preserves these original files. It shows a resolution only when reported, and describes MP3 conversion as requiring an audio track when audio metadata is missing. A missing field no longer hides an available video.",

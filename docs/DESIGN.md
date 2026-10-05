@@ -1,61 +1,46 @@
-# Website design
+# Product Website Design
 
-## Direction
+## Editorial Refresh, October 2026
 
-Lavender, off-white canvas, charcoal surfaces and clear refractive liquid glass.
-This carries the accepted application's palette and typography into a product
-site. The mark stays `OpenDownload.` in both reading directions.
+OpenDownload is presented as a practical tool for keeping public media. The
+website uses white space, charcoal typography, a forest-green action color,
+and original photography-style imagery with red, blue and green accents.
+There are no floating glass objects, gradients, decorative browser frames,
+autoplay, pointer tilt, invented testimonials or usage counts.
 
-UI/UX Pro Max's open-source landing query informed the hero/features/CTA pattern,
-install command, accessibility, measured motion and contributor links. Its generic
-flat/dark palette did not match the established product, so the product's accepted
-glass/lavender tokens were retained. Local Manrope headings, DM Sans body text and Readex Pro Arabic keep
-the two locales visually coherent without remote font requests.
+The wordmark remains `OpenDownload.` in both reading directions. Local Manrope,
+DM Sans and Readex Pro fonts retain their existing licenses. Dark mode has its
+own contrast tokens; the photographic hero retains a light, readable surface.
 
-## References inspected, 2026-10-01
+## Structure
 
-- [Cal.com](https://cal.com/): primary product action, visual explanation of the
-  workflow, documentation and editorial resources.
-- [Plausible](https://plausible.io/): clear scope, direct copy, product evidence and
-  a practical route to self-hosting.
-- [Supabase](https://supabase.com/): open-source project links, docs, changelog and
-  community resources as first-class product content.
+- A full-width photographic hero identifies the product and opens the real app.
+- The actual workspace appears before the source selector. Preview controls show
+  video, audio, image collections and Arabic using real, uncomposited captures.
+- Eleven source controls distinguish verified samples from conditional adapters.
+- Three photographic media stories show video, audio and image use cases.
+- Self-hosting, three journal stories, FAQ and the final action remain first-class.
+- Documentation, articles, resources and navigation share the same typography,
+  borders and restrained layout. Page sections are not floating cards.
 
-The structure is adapted; no layout, brand graphics, copy, testimonials or
-customer logos are copied. There are no fabricated usage counts or trust claims.
+## Accessibility And Performance
 
-## Interaction
+Native FAQ disclosure and mobile navigation support keyboard input. Source and
+preview controls expose their selected state. Copy commands report success or
+failure. Localized routes preserve the page and reading direction; theme
+preference remains local. Motion is limited to a small hover effect, disabled
+under reduced motion. All content remains visible without an intersection observer.
 
-- Screenshot buttons switch real captured images. Images never pretend to be a
-  live embedded downloader. The full screenshot can be opened separately.
-- Native FAQ disclosure and mobile navigation support keyboard interaction.
-- Theme preference stays local. Localized URLs preserve page and reading direction.
-- Documentation search filters five useful guides; copy commands have accessible
-  success/failure feedback.
-- Entry and scroll reveals are finite, use opacity/transform, preserve content
-  with JavaScript disabled, and stop under reduced motion. Two decorative hero cards
-  float slowly, with a visible pause/resume control; motion pauses offscreen.
-  Pointer tilt uses requestAnimationFrame and refs, with no render per pointer move.
-  No autoplay media or scroll hijacking is used.
-- Images use responsive Next.js optimization, reserved dimensions and lazy loading
-  below the hero. Text has visible focus and theme-specific contrast tokens.
+Generated artwork uses WebP at original 1536x1024 resolution. Product captures
+retain their native JPEG bytes. Images have reserved dimensions, meaningful
+alternative text, responsive sizing and lazy loading below the hero. CI verifies
+image encodings, dimensions, nonblank pixels and a combined asset budget.
 
-## Content boundaries
+## Honest Product Boundaries
 
-The product is v0.1.0. YouTube is explicitly excluded. Candidate adapters are not
-universal platform guarantees. Dedicated gallery extraction remains deferred.
-Privacy describes the separate website, application, local preferences, temporary
-media and infrastructure logs. Security links to private GitHub reporting and
-states the absence of an independent audit.
-
-## Richer product presentation
-
-The split hero combines a generated coastal photograph, a credited NASA photo
-and transparent material artwork. It is labeled as an illustration. A separate
-section presents actual screenshots. Eight glass source cards use original Simple Icons brand vectors, content types and
-animated detail transitions. They
-explain sample-tested sources separately from conditional adapters.
-
-Liquid glass uses colored backdrops, translucent surfaces, blur, saturation,
-edge highlights and inset rims. Text stays readable; reduced transparency uses
-opaque surfaces. The name plus accent period remains the only logo.
+Screenshots are evidence of the real application, not generated mockups. Editorial
+artwork is illustration, not proof of downloaded media. See [asset provenance](ASSETS.md).
+The current source and public application include LinkedIn, Pinterest and Threads;
+the immutable v0.1.0 release retains its original scope. Source availability is
+not a guarantee that every URL works. YouTube, private, authenticated, paywalled
+and DRM-protected content remain excluded. No external analytics were added.

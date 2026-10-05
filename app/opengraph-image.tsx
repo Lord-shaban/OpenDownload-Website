@@ -10,16 +10,16 @@ export default function Image() {
           display: "flex",
           width: "100%",
           height: "100%",
-          background: "#f1eff9",
+          background: "#f4f6f5",
           padding: "72px",
           flexDirection: "column",
           justifyContent: "space-between",
-          color: "#292833",
+          color: "#17231e",
           fontFamily: "sans-serif",
         }}
       >
         <div style={{ display: "flex", fontSize: 34, fontWeight: 700 }}>
-          OpenDownload<span style={{ color: "#655acd" }}>.</span>
+          OpenDownload<span style={{ color: "#176749" }}>.</span>
         </div>
         <div
           style={{
@@ -27,15 +27,15 @@ export default function Image() {
             flexDirection: "column",
             fontSize: 78,
             fontWeight: 700,
-            letterSpacing: "-4px",
+            letterSpacing: "0px",
             lineHeight: 1.1,
           }}
         >
-          <span>From a public link.</span>
-          <span style={{ color: "#6c62ca" }}>To your device.</span>
+          <span>Good media.</span>
+          <span style={{ color: "#176749" }}>Worth keeping.</span>
         </div>
-        <div style={{ display: "flex", fontSize: 23, color: "#625d76" }}>
-          Free & open source. No account. No ads. · v0.1
+        <div style={{ display: "flex", fontSize: 23, color: "#57625d" }}>
+          Public video, audio & images. Free & open source.
         </div>
       </div>
     ),

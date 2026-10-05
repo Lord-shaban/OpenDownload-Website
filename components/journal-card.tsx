@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { postDate, type Post } from "@/lib/content";
 import { href, text, type Locale } from "@/lib/site";
-import { SourceIcon } from "./brand-icons";
 
 export function PostCover({
   post,
@@ -14,40 +13,39 @@ export function PostCover({
   locale: Locale;
   eager?: boolean;
 }) {
-  const t = (en: string, ar: string) => text(locale, en, ar);
+  const covers = {
+    release: {
+      src: "/images/video-studio-v2.webp",
+      alt: text(locale, "A cinema camera and film strips", "كاميرا سينمائية وشرائط فيلم"),
+    },
+    design: {
+      src: "/images/design-desk-v2.webp",
+      alt: text(
+        locale,
+        "An open design notebook and color swatches",
+        "دفتر تصميم مفتوح وعينات ألوان"
+      ),
+    },
+    sources: {
+      src: "/images/sources-collection-v2.webp",
+      alt: text(
+        locale,
+        "Three photographic collections connected to one archival box",
+        "ثلاث مجموعات صور متصلة بصندوق أرشفة واحد"
+      ),
+    },
+  };
+  const cover = covers[post.cover];
   return (
-    <div className={`journal-image ${post.cover === "release" ? "" : "pale"}`}>
+    <div className="journal-image">
       <Image
-        src={post.cover === "release" ? "/images/open-glass.png" : "/images/liquid-glass.png"}
-        alt=""
+        src={cover.src}
+        alt={cover.alt}
         width={1536}
         height={1024}
-        sizes="(max-width: 800px) 94vw, 560px"
+        sizes={eager ? "(max-width: 800px) 94vw, 960px" : "(max-width: 700px) 94vw, 380px"}
         loading={eager ? "eager" : "lazy"}
       />
-      {post.cover === "release" ? (
-        <span className="image-wordmark" dir="ltr">
-          OpenDownload<span>.</span>
-          <small>0.1</small>
-        </span>
-      ) : post.cover === "sources" ? (
-        <span className="sources-cover" dir="ltr">
-          <span>
-            <SourceIcon id="linkedin" size={32} /> LinkedIn
-          </span>
-          <span>
-            <SourceIcon id="pinterest" size={32} /> Pinterest
-          </span>
-          <span>
-            <SourceIcon id="threads" size={32} /> Threads
-          </span>
-        </span>
-      ) : (
-        <span className="design-cover">
-          {t("Link.", "رابط.")}
-          <em>{t("Format. File.", "صيغة. ملف.")}</em>
-        </span>
-      )}
     </div>
   );
 }

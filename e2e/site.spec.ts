@@ -6,24 +6,15 @@ for (const locale of ["en", "ar"] as const) {
     await page.goto(`/${locale}`);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     await expect(page.locator("html")).toHaveAttribute("dir", ar ? "rtl" : "ltr");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      ar ? "من رابط عام" : "From a public link"
-    );
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("OpenDownload.");
     expect(
       await page.locator("main .actions").first().getByRole("link").first().getAttribute("href")
     ).toBe(APP_URL);
     expect(
       await page.locator("main .actions").first().getByRole("link").nth(1).getAttribute("href")
     ).toBe(REPO_URL);
-    const motion = page.getByRole("button", {
-      name: ar ? "إيقاف الحركة" : "Pause motion",
-      exact: true,
-    });
-    await motion.click();
-    await expect(page.locator(".media-scene")).toHaveAttribute("data-paused", "true");
-    await expect(
-      page.getByRole("button", { name: ar ? "تشغيل الحركة" : "Resume motion", exact: true })
-    ).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator(".hero-art")).toHaveAttribute("src", /media-desk-v2/);
+    await expect(page.locator(".media-scene")).toHaveCount(0);
     await expect(page.locator(".source-grid button")).toHaveCount(11);
     for (const source of ["linkedin", "pinterest", "threads"]) {
       await page.locator(`.source-${source}`).click();
@@ -42,10 +33,12 @@ for (const locale of ["en", "ar"] as const) {
     await expect(page.locator("#source-detail")).toContainText(
       ar ? "معارض الصور" : "photo galleries"
     );
-    const dark = page.getByRole("button", { name: ar ? "داكن" : "Dark", exact: true });
-    await dark.click();
-    await expect(dark).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /owned|مملوك/);
+    const audio = page.getByRole("button", { name: ar ? "صوت" : "Audio", exact: true });
+    await audio.click();
+    await expect(audio).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /LinkedIn/);
+    await page.getByRole("button", { name: ar ? "صور" : "Images", exact: true }).click();
+    await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /WebP/);
     await page.getByRole("button", { name: ar ? "العربية" : "Arabic", exact: true }).click();
     await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /Arabic|العربية/);
     await page.locator(".faq-list summary").first().click();
@@ -90,13 +83,61 @@ for (const locale of ["en", "ar"] as const) {
       /copied|تم نسخ|Select|تعذر/
     );
   });
+  test(`${locale}: responsive product images and compact layouts`, async ({ page }) => {
+    await page.goto(`/${locale}`);
+    for (const viewport of [
+      { width: 320, height: 568 },
+      { width: 390, height: 844 },
+      { width: 768, height: 1024 },
+      { width: 1440, height: 900 },
+    ]) {
+      await page.setViewportSize(viewport);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+        true
+      );
+      if (viewport.width <= 600) {
+        const copy = await page.locator(".hero-copy").boundingBox();
+        const art = await page.locator(".hero-art-wrap").boundingBox();
+        expect(copy!.y + copy!.height).toBeLessThanOrEqual(art!.y);
+      }
+      for (const name of ar
+        ? ["فيديو", "صوت", "صور", "العربية"]
+        : ["Video", "Audio", "Images", "Arabic"]) {
+        await page.getByRole("button", { name, exact: true }).click();
+        const image = page.locator(".showcase-image img");
+        await expect
+          .poll(() =>
+            image.evaluate((el) => {
+              const image = el as HTMLImageElement;
+              return image.complete && image.naturalWidth > 100;
+            })
+          )
+          .toBe(true);
+        const src = await image.evaluate((el) => (el as HTMLImageElement).currentSrc);
+        expect(src.includes("-mobile-v2.jpg")).toBe(viewport.width <= 600);
+      }
+    }
+    for (const photo of await page
+      .locator(".media-item img, .journal-card img, .open-photo")
+      .all()) {
+      await photo.scrollIntoViewIfNeeded();
+      await expect
+        .poll(() =>
+          photo.evaluate(
+            (el) => (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 100
+          )
+        )
+        .toBe(true);
+    }
+  });
   test(`${locale}: source announcement, publication dates and article metadata`, async ({
     page,
     request,
   }) => {
     await page.goto(`/${locale}/blog`);
     const newest = page.locator(".journal-card").first();
-    await expect(newest).toContainText("LinkedIn");
+    await expect(newest).toContainText(ar ? "لينكدإن" : "LinkedIn");
+    await expect(newest.locator("img")).toHaveAttribute("src", /sources-collection-v2/);
     await expect(newest.locator("time")).toHaveAttribute("datetime", "2026-10-03");
     await expect(page.locator('.journal-card time[datetime="2026-10-01"]')).toHaveCount(2);
     await newest.click();
@@ -126,7 +167,7 @@ for (const locale of ["en", "ar"] as const) {
       await page.locator(".hero h1").evaluate((el) => getComputedStyle(el).animationName)
     ).toBe("none");
     expect(
-      await page.locator(".scene-photo").evaluate((el) => getComputedStyle(el).animationName)
+      await page.locator(".hero-art").evaluate((el) => getComputedStyle(el).animationName)
     ).toBe("none");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true

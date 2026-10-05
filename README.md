@@ -1,5 +1,7 @@
 # OpenDownload website
 
+![OpenDownload editorial media collection](public/images/sources-collection-v2.webp)
+
 The standalone product website for [OpenDownload](https://github.com/Lord-shaban/OpenDownload).
 [Live website](https://opendownload-website.vercel.app/en) · [العربية](https://opendownload-website.vercel.app/ar)
 
@@ -36,6 +38,7 @@ blog index; article metadata and the sitemap include the new bilingual routes.
 
 ```sh
 pnpm lint
+pnpm verify:assets
 pnpm build
 pnpm typecheck
 pnpm exec playwright install chromium
@@ -44,7 +47,7 @@ pnpm audit --prod --audit-level high
 ```
 
 The browser suite covers desktop/mobile, both locales, theme persistence,
-source details, motion pause, preview controls, FAQ, documentation search, copy feedback, navigation,
+source details, real workflow previews, FAQ, documentation search, copy feedback, navigation,
 all routes/canonicals, 404s, reduced motion and horizontal overflow.
 These website checks do not certify media-source uptime.
 
@@ -71,10 +74,13 @@ Never commit `.env*`, `.vercel`, generated OIDC tokens or deployment credentials
 - [Design notes and references](docs/DESIGN.md)
 - [Asset sources and generation prompts](docs/ASSETS.md)
 
-The logo is the text **OpenDownload.** only. Actual UI screenshots are separated
-from decorative generated glass artwork. Two decorative hero cards float with a pause control; they stop outside the
-viewport and under reduced motion. Other motion is finite. No newsletter, invented metrics or third-party
-analytics scripts are added.
+The logo is the text **OpenDownload.** only. Six original photography-style assets
+replace the previous glass artwork. Each blog post has its own cover. Real product
+screenshots show public video, MP3 selection, image collections and Arabic; no
+generated interface is presented as the app. The layout uses full-width bands,
+restrained borders and accessible preview/source controls. CI checks image type,
+dimensions, nonblank pixels and an asset budget. No newsletter, invented metrics
+or third-party analytics scripts are added.
 
 MIT applies to this project's original code. Upstream fonts and libraries retain
 their own licenses. Manrope, DM Sans and Readex Pro use the SIL Open Font License; license notices
