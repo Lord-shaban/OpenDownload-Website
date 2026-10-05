@@ -1,92 +1,94 @@
-# Asset provenance
+# Asset Provenance
 
-## Source update, October 3, 2026
+## Original Editorial Artwork
 
-LinkedIn, Pinterest and Threads brand masks are unchanged Simple Icons 11.15.0
-SVGs (CC0), retrieved from the versioned npm package on jsDelivr:
-`https://cdn.jsdelivr.net/npm/simple-icons@11.15.0/icons/{linkedin,pinterest,threads}.svg`.
-They identify the sources; no affiliation is implied. The new article cover
-reuses `liquid-glass.png` with HTML source labels and these masks.
+Six independent images were generated with the built-in `image_gen` tool, with
+`transparent_background: false`. The four initial images were generated October
+3, 2026; the photo and design studies followed October 4. The originals remain in
+Codex's generated-images directory. Final project assets use WebP quality 86 at
+the original 1536x1024 resolution. No cropping, compositing or UI fabrication was
+performed. The previous glass artwork and test-pattern screenshots were removed.
 
-## Actual product captures
+| Asset in `public/images/`    | Used for                                      |  Bytes |
+| ---------------------------- | --------------------------------------------- | -----: |
+| `media-desk-v2.webp`         | Full-width hero                               | 131178 |
+| `sources-collection-v2.webp` | LinkedIn/Pinterest/Threads article cover      | 268764 |
+| `video-studio-v2.webp`       | Video story and release article cover         | 274478 |
+| `audio-studio-v2.webp`       | Audio story                                   | 163594 |
+| `photo-studio-v2.webp`       | Image story and source article body           | 299858 |
+| `design-desk-v2.webp`        | Self-hosting section and design article cover | 146118 |
 
-Captured on 2026-10-01 using the in-app browser at
-https://opendownload.lord.blitz.cloud/, reporting v0.1.0 and real mode:
+Artwork illustrates creative media and is not evidence of downloaded content.
+The real application is shown only in the separately captured screenshots below.
+Typography and platform marks are rendered in code, never baked into generated art.
 
-- `public/images/workspace-light.jpg`: actual English light workspace, 1280×720.
-- `public/images/workspace-dark.jpg`: actual English dark analysis, 1239×873.
-- `public/images/workspace-arabic.jpg`: same analysis in Arabic/RTL, 1239×873.
+### Hero Prompt
 
-The analyzed video is the project's owned test pattern:
-https://raw.githubusercontent.com/Lord-shaban/OpenDownload/d187d89cf24eb1908ee0098550d806b9da58dd6a/tests/assets/sample.mp4
+> Create an original premium editorial photograph for the open-source media downloader OpenDownload website HERO. Wide landscape 3:2 composition. A real sunlit contemporary white studio desk seen from directly overhead, restrained authentic magazine art direction. Keep the LEFT HALF and top left almost completely clear pale white desk for black web typography overlay (do NOT add any words yourself). On the RIGHT HALF, an artfully organized fan of three physical photographic prints: a crisp deep teal ocean surfer seen from above, a vibrant red-orange architectural staircase with hard natural shadows, a close-up green botanical leaf. Beside these prints one pair of small black wired earphones and a dark compact memory card, physically plausible, all objects lying flat on the desk. Edge of a silver laptop keyboard only barely enters from the far right edge, NO screen and NO fictional UI. Rich real photographic details, visible paper grain and realistic shadow edges, cool clear daylight, confident red teal and charcoal accents against white. No floating objects, no glass blobs, no gradients, no 3D render, no sci-fi, no bokeh, no logos, no text, no watermark. The mood is practical creative ownership, saving meaningful media, beautifully organized tangible media library. Clean sparse composition with sufficient negative space.
 
-Captures are native JPEG outputs, retained without compositing or image edits.
-Decorative browser frames and preview controls are HTML/CSS. No fixture screenshot
-or invented generated interface is presented as the actual product.
+### Source Collection Prompt
 
-## Generated artwork
+> Original editorial cover photograph for an article announcing LinkedIn, Pinterest and Threads media support in OpenDownload. Landscape 3:2. Three beautiful physical photo contact sheets laid on a bright white studio table in a deliberately balanced graphic arrangement: on left a blue cyan architectural portrait contact sheet, in center a red architectural stairway and botanical collage contact sheet, on right a charcoal black and white city street photography contact sheet. Thin real dark teal cotton thread connects their corners to a single tidy white archival storage box at lower center, visual metaphor of three sources into one saved collection. Strict flat lay, geometrically pleasing real objects, gentle natural studio light, subtle paper fibers, strong blue/red/green accents, premium independent magazine photography, no digital UI, no platform logos, absolutely no text, no floating or transparent glass objects, no futuristic decoration, no gradient blobs, no watermark. Objects large enough for a blog thumbnail. Highly creative but physically believable, crisp fine photography.
 
-Generated with the built-in **image_gen** model, copied into this standalone
-project, with originals retained in Codex's generated-images directory. Artwork
-is decorative; it does not prove application behavior. Text overlays are HTML.
+### Video Prompt
 
-### `public/images/glass-ribbon.png`
+> Original editorial photograph, landscape 3:2, close view of a classic silver and black handheld cinema camera resting on a white desk beside three actual 35mm film strips showing vivid teal ocean waves and red sunlit architecture. Crisp material detail, physically plausible lens, natural daylight, restrained contemporary independent film magazine art direction, graphic diagonal composition with cool silver charcoal and saturated small teal/red accents, no lettering, no logos, no watermarks, no imaginary futuristic objects, no transparent glass sculptures, no floating objects. The photograph represents saving public video and a release of an honest open source software tool. Make it look like a real photographer arranged and shot these real objects, slightly imperfect beautiful paper edges.
 
-Final prompt:
+### Audio Prompt
 
-> Use case: stylized-concept. Asset type: original hero artwork for OpenDownload open-source product landing page, wide landscape 16:9. Create an exquisitely quiet premium 3D material study: flowing translucent frosted-glass ribbons curl into a loose open loop across the lower half, suspended over a very light pearlescent lavender studio background. Subtle lilac and periwinkle refraction, soft natural diffused lighting, fine silky surfaces, light grain, elegant spacious composition. Top third and center mostly clear pale negative space for a real application screenshot to be layered later in code. Modern desktop-glass aesthetic, restrained editorial art direction. No screens, devices, interface, typography, logos, symbols, letters, numbers, watermarks, hands or people. This is background art, not a UI mockup. Preserve broad usable empty central area, avoid saturated purple, neon, chrome metallic gloss or dark space imagery.
+> Create a beautiful original premium music editorial photograph, landscape 3:2. Close-up overhead composition of minimalist black wired over-ear headphones on a white desk, a small metallic portable audio recorder with authentic physical buttons but no readable text, beside one deep coral red square record sleeve and a black vinyl record partially sliding out. Hard clear natural daylight, elegant simple geometric arrangement, tactile matte paper and machined aluminum textures, editorial photograph for an open source audio downloader, warm human creative studio but WHITE neutral dominant surface with strong red black accents, highly detailed credible photographed real objects, absolutely no words, letters, logos, watermark, no glowing equalizer overlays, no fictional digital UI, no 3D glass, no flying objects, no bokeh blobs. Rich but restrained color, minimal clutter.
 
-### `public/images/open-glass.png`
+### Photo Prompt
 
-Final prompt:
+> Original editorial photograph, landscape 3:2. Two large photographic prints on a crisp white studio surface: one vividly detailed red architectural staircase and one deep emerald monstera leaf with raindrops, arranged as a precise creative diptych. A clean silver photographic loupe resting in bottom right corner and small black binder clip attaching print edges, tactile paper fibers. Shot straight overhead, graphic composition filling most of frame, sophisticated creative magazine quality, clear natural daylight, red and green complement with black minimal accents. No laptops, screens, fake UI, no text or logos, no floating objects or glass sculpture, no gradients, no watermark. Intended as a beautiful picture for an image collection/download feature. Keep geometry credible and simple, highly detailed photographic prints themselves.
 
-> Use case: stylized-concept. Asset type: editorial blog cover for the OpenDownload open-source media product, landscape 3:2. A sculptural open translucent violet glass ring resting upright on a matte dark charcoal plinth, one delicate translucent sheet passing through the ring, evoking media flowing freely and a clear open-source system. Premium studio product photograph rendered in 3D, very quiet composition, low contrast charcoal background, carefully lit lavender edges and diffuse soft lilac bounce light. Fine frosted texture, subtle organic asymmetry, wide negative space at left for editorial headline layered later in code. No screens, devices, arrows, UI, symbols, text, letters, numbers, logos, people, watermark, neon, chrome or galaxy effects. Cohesive with a pale lavender frosted-glass ribbon website hero. Single sculptural composition, sophisticated minimal open-source launch editorial aesthetic.
+### Design Prompt
 
-## Reusable image treatments
+> Original editorial design journal cover, landscape 3:2. A minimal artist's organized desk, photographed directly from overhead on a white neutral surface. Large white grid notebook open in the center with simple hand-drawn clean rectangle wireframe shapes only, ABSOLUTELY NO letters, no words, no fake digital UI. To left three physical rectangular color chips in dark forest green, vermilion red, cool charcoal black. To right a silver straight ruler and a black graphite pencil, top edge a small physical ocean blue photography print clipped to paper. Thoughtful visual composition about designing an honest calm open source media app, subtle tactile details, razor-sharp clear daylight, premium independent design magazine photography, realistic real materials, restrained vivid accents, no beige dominant color, no glass sculptures, no floating objects, no gradients, no logos, no watermark.
 
-`Showcase` supplies the actual screenshot frame, view switch and caption.
-`journal-image` supplies two editorial cover templates: dark release/wordmark and
-pale design/title. Replace source image and HTML title together; keep alt text
-for meaningful media and empty alt for purely decorative art. Dynamic Open Graph
-cards use code-native typography at 1200×630.
+## Real Product Captures
 
-The wordmark and vector interface icons are code-native, not generated bitmaps.
+Captured October 4, 2026 using the in-app browser at
+[the public app](https://opendownload.lord.blitz.cloud/). The deployed application
+is running real extraction, not fixture mode, from the source update merged in
+[application PR #39](https://github.com/Lord-shaban/OpenDownload/pull/39).
 
-## Additional liquid glass and media assets
+Native JPEG outputs are retained without editing or compositing. Screenshot
+dimensions are the returned bitmap dimensions, not invented device frames.
+Desktop captures are 1065x927; phone captures are 375x811. The screenshots are
+viewport captures, not claims that every part of the document fits in one screen.
+The product preview uses `<picture>` to show actual phone captures on small
+screens instead of squeezing a desktop interface into an unreadable thumbnail.
 
-### `public/images/liquid-glass.png`
+| Capture                          | State                                                      |
+| -------------------------------- | ---------------------------------------------------------- |
+| `workspace-video-v2.jpg`         | Public Threads video, English light mode                   |
+| `workspace-dark-v2.jpg`          | Same public video, English dark mode                       |
+| `workspace-audio-v2.jpg`         | LinkedIn MP3 selection, English dark mode                  |
+| `workspace-images-v2.jpg`        | Original project WebP image, English light mode            |
+| `workspace-arabic-v2.jpg`        | Public Threads video, Arabic dark mode                     |
+| `workspace-video-mobile-v2.jpg`  | Public Threads video, Arabic light mode on a phone         |
+| `workspace-audio-mobile-v2.jpg`  | LinkedIn MP3 selection, English light mode on a phone      |
+| `workspace-images-mobile-v2.jpg` | Original project WebP image, English light mode on a phone |
+| `workspace-arabic-mobile-v2.jpg` | Original project WebP image, Arabic dark mode on a phone   |
 
-Final prompt:
+Public source URLs used:
 
-> Original premium 3D background artwork for OpenDownload, a public media download product. Landscape 16:9. A large clear liquid glass loop bends into a flowing folded sheet, physically accurate strong refraction, rounded polished glass edges, transparent center, delicate lavender and ice blue highlights, small peach caustic, resting over a lilac-to-warm-pearl studio surface. Composition on right two thirds, left quarter calm but not blank white, luminous depth, tactile translucent glass, editorial product photography quality, contemporary desktop liquid glass material. Broad central area to layer real HTML cards later. No typography, UI, screens, devices, icons, logos, letters, arrows, people or watermarks. Clear refractive glass, not matte frosted plastic, no chrome or neon. Sophisticated, dramatic yet airy.
+- Video: `https://www.threads.com/@pubity/post/Cxd59tZLMrd`
+- Audio: `https://www.linkedin.com/posts/the-mathworks_2_what-is-mathworks-cloud-center-activity-7151241570371948544-4Gu7`
+- Images: `https://raw.githubusercontent.com/Lord-shaban/OpenDownload/cafeee0eba57e9e90de4be4349b9f34b90f8e709/docs/assets/studio-prints.webp`
 
-### `public/images/coast-editorial.png`
+Source thumbnails and titles remain attributed in the real application. They are
+third-party media, not endorsements. The image source is the project's own generated
+`studio-prints.webp`, used for real original-image analysis. Original UI and the six generated
+editorial assets are distinct from third-party source content.
 
-Final prompt:
+## Brand Marks And Fonts
 
-> Original editorial nature photograph for media library illustrations on the OpenDownload product website. Landscape 3:2. A solitary cream lighthouse on a lush green headland above deep teal Atlantic ocean, soft distant surf, lavender dusk sky, tiny warm interior light, shot on medium format film, organic grain, striking tasteful contemporary travel photography, rich teal, muted lilac and earthy olive palette, believable natural detail, pleasing asymmetrical composition with lighthouse at right third, no people, no text, logos, screens, watermarks, borders or graphic overlays. This is an original photographic-style illustrative asset, not a screenshot.
-
-The coast is generated illustrative media, not a claimed downloaded video.
-The hero explicitly labels its media illustration; actual app screenshots are
-presented separately. Original generated files are retained in Codex.
-
-### `public/images/earthrise-nasa.jpg`
-
-Real photograph, credit NASA, Lunar Orbiter 1. Source and visible credit:
-https://science.nasa.gov/resource/earthrise/
-Downloaded from the image link on that page on 2026-10-01; original bytes retained.
-No NASA endorsement or affiliation is implied.
-
-## Brand icons
-
-TikTok, Instagram, X, Facebook, Reddit, SoundCloud and GitHub use original
-Simple Icons 14.0.0 vectors (CC0). Vimeo uses Simple Icons 16.0.0 (CC0):
-https://github.com/simple-icons/simple-icons/blob/16.0.0/icons/vimeo.svg
-
-The names and marks identify media sources. They do not imply partnerships.
-They retain their respective trademark ownership. Generic interface controls
-use Lucide; direct URLs use a link icon. OpenDownload's own logo is its name
-followed by the accent period.
-
-NASA usage reference: https://www.nasa.gov/nasa-brand-center/images-and-media/
-Icon license notices are retained in `public/licenses/`.
+LinkedIn, Pinterest and Threads use unchanged Simple Icons 11.15.0 SVGs (CC0),
+from the versioned npm package on jsDelivr. TikTok, Instagram, X, Facebook, Reddit,
+SoundCloud and GitHub use Simple Icons 14.0.0; Vimeo uses 16.0.0. Names and marks
+identify sources, retain their trademark ownership and do not imply partnership.
+Notices remain in `public/licenses/`. Interface icons use Lucide. The OpenDownload
+wordmark and 1200x630 Open Graph typography are code-native.
+See [font provenance](FONTS.md) for local font licenses.

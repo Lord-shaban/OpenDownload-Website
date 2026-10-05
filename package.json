@@ -9,6 +9,7 @@
     "start": "next start --hostname 127.0.0.1 --port 3100",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "verify:assets": "node scripts/verify-assets.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

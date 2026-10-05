@@ -1,156 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import {
-  ArrowRight,
-  ArrowDownToLine,
-  Check,
-  Film,
-  Music2,
-  Pause,
-  Play,
-  ImageIcon,
-} from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Check } from "lucide-react";
 import { href, text, type Locale } from "@/lib/site";
 import { SourceIcon, type SourceId } from "./brand-icons";
-
-export function MediaScene({ locale }: { locale: Locale }) {
-  const [paused, setPaused] = useState(false);
-  const scene = useRef<HTMLDivElement>(null);
-  const frame = useRef<number | null>(null);
-  useEffect(() => {
-    const element = scene.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      element.dataset.visible = String(entry.isIntersecting);
-    });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-  useEffect(
-    () => () => {
-      if (frame.current !== null) cancelAnimationFrame(frame.current);
-    },
-    []
-  );
-  const t = (en: string, ar: string) => text(locale, en, ar);
-  return (
-    <div
-      className="media-scene"
-      ref={scene}
-      data-paused={paused}
-      onPointerMove={(event) => {
-        if (
-          paused ||
-          event.pointerType !== "mouse" ||
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        )
-          return;
-        const bounds = event.currentTarget.getBoundingClientRect();
-        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-        if (frame.current !== null) cancelAnimationFrame(frame.current);
-        frame.current = requestAnimationFrame(() => {
-          scene.current?.style.setProperty("--tilt-x", `${x * 5}deg`);
-          scene.current?.style.setProperty("--tilt-y", `${-y * 5}deg`);
-        });
-      }}
-      onPointerLeave={() => {
-        if (frame.current !== null) cancelAnimationFrame(frame.current);
-        scene.current?.style.setProperty("--tilt-x", "0deg");
-        scene.current?.style.setProperty("--tilt-y", "0deg");
-      }}
-    >
-      <Image
-        className="scene-backdrop"
-        src="/images/liquid-glass.png"
-        alt=""
-        fill
-        sizes="(max-width: 800px) 100vw, 640px"
-        preload
-      />
-      <div className="scene-composition" aria-hidden="true">
-        <div className="scene-photo glass-material">
-          <Image
-            src="/images/coast-editorial.png"
-            alt=""
-            width={1536}
-            height={1024}
-            sizes="320px"
-          />
-          <div className="photo-caption">
-            <span>
-              <Film size={15} />
-              coast.mp4
-            </span>
-            <span>VIDEO</span>
-          </div>
-          <span className="scene-play">
-            <Play size={19} fill="currentColor" />
-          </span>
-        </div>
-        <div className="scene-audio glass-material">
-          <div className="audio-heading">
-            <span className="audio-icon">
-              <Music2 size={23} />
-            </span>
-            <div>
-              <strong>{t("Just the audio", "الصوت فقط")}</strong>
-              <span>MP3 · M4A</span>
-            </div>
-          </div>
-          <div className="waveform">
-            {Array.from({ length: 28 }, (_, i) => (
-              <i key={i} style={{ height: `${12 + ((i * 17 + 9) % 35)}px` }} />
-            ))}
-          </div>
-        </div>
-        <div className="scene-image glass-material">
-          <Image src="/images/earthrise-nasa.jpg" alt="" width={2738} height={3584} sizes="160px" />
-          <span>
-            <ImageIcon size={13} />
-            NASA · JPG
-          </span>
-        </div>
-        <div className="scene-download glass-material">
-          <span>
-            <ArrowDownToLine size={19} />
-          </span>
-          <div>
-            <strong>{t("Save to your device", "احفظ على جهازك")}</strong>
-            <small>MP4 · MP3 · JPG</small>
-          </div>
-          <Check size={17} />
-        </div>
-      </div>
-      <div className="scene-bottom">
-        <span>
-          {t(
-            "Media illustration · NASA photo + generated artwork",
-            "تصوّر للوسائط · صورة NASA وصور مولّدة"
-          )}
-        </span>
-        <button
-          className="motion-control"
-          aria-label={t(
-            paused ? "Resume motion" : "Pause motion",
-            paused ? "تشغيل الحركة" : "إيقاف الحركة"
-          )}
-          aria-pressed={paused}
-          onClick={() => {
-            setPaused(!paused);
-            scene.current?.style.setProperty("--tilt-x", "0deg");
-            scene.current?.style.setProperty("--tilt-y", "0deg");
-          }}
-        >
-          {paused ? <Play size={14} /> : <Pause size={14} />}
-        </button>
-      </div>
-    </div>
-  );
-}
 
 const sources: {
   id: SourceId;
@@ -310,12 +164,7 @@ export function SourceExplorer({ locale }: { locale: Locale }) {
           </button>
         ))}
       </div>
-      <div
-        className="source-detail glass-material"
-        id="source-detail"
-        aria-live="polite"
-        aria-atomic="true"
-      >
+      <div className="source-detail" id="source-detail" aria-live="polite" aria-atomic="true">
         <div className="source-detail-inner" key={selected}>
           <div className="source-detail-title">
             <SourceIcon id={source.id} size={23} />

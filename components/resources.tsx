@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -35,6 +36,18 @@ export function ArticleBody({ article, locale }: { article: Article; locale: Loc
             </ul>
           )}
           {section.code && <CopyCode code={section.code} locale={locale} />}{" "}
+          {section.image && (
+            <figure className="story-figure">
+              <Image
+                src={section.image.src}
+                alt={section.image.alt}
+                width={section.image.width}
+                height={section.image.height}
+                sizes="(max-width: 800px) 94vw, 750px"
+              />
+              <figcaption>{section.image.caption}</figcaption>
+            </figure>
+          )}
           {section.note && (
             <aside className="callout">
               <BookOpen size={18} aria-hidden="true" />
