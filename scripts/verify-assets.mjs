@@ -47,3 +47,32 @@ assert.ok(total < 1_700_000, "Combined image budget exceeded");
 console.log(
   `Verified ${art.length + captures.length + phones.length} assets; ${total} bytes total.`
 );
+
+const restored = [
+  ["coast-editorial.png", "png", 1536, 1024],
+  ["earthrise-nasa.jpg", "jpeg", 2738, 3584],
+  ["glass-ribbon.png", "png", 1672, 941],
+  ["liquid-glass.png", "png", 1672, 941],
+  ["open-glass.png", "png", 1536, 1024],
+  ["workspace-arabic.jpg", "jpeg", 1239, 873],
+  ["workspace-dark.jpg", "jpeg", 1239, 873],
+  ["workspace-light.jpg", "jpeg", 1280, 720],
+];
+let restoredBytes = 0;
+for (const [name, format, width, height] of restored) {
+  const path = fileURLToPath(new URL(name, root));
+  const metadata = await sharp(path).metadata();
+  const info = await stat(path);
+  assert.equal(metadata.format, format, `${name}: unexpected format`);
+  assert.equal(metadata.width, width, `${name}: unexpected width`);
+  assert.equal(metadata.height, height, `${name}: unexpected height`);
+  assert.ok(info.size < 3_000_000, `${name}: restored asset budget exceeded`);
+  const { channels } = await sharp(path).stats();
+  assert.ok(
+    channels.reduce((sum, channel) => sum + channel.stdev, 0) / channels.length > 8,
+    `${name}: image must not be blank`
+  );
+  restoredBytes += info.size;
+}
+assert.ok(restoredBytes < 10_000_000, "Restored image budget exceeded");
+console.log(`Verified ${restored.length} restored assets; ${restoredBytes} bytes total.`);

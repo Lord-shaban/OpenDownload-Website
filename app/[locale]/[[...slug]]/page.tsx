@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Header, Footer } from "@/components/site-shell";
+import { Motion } from "@/components/interactive";
 import { Landing } from "@/components/landing";
 import {
   DocPage,
@@ -107,6 +108,7 @@ export default async function Page({ params }: { params: Params }) {
       <Header locale={locale} path={path} />
       <main id="main">{content}</main>
       <Footer locale={locale} />
+      <Motion key={`${locale}/${path}`} />
     </>
   );
 }
