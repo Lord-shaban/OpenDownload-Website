@@ -101,9 +101,12 @@ for (const locale of ["en", "ar"] as const) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
         true
       );
-      const title = await page.locator(".hero h1").boundingBox();
-      const actions = await page.locator(".hero .actions").boundingBox();
-      expect(title!.y + title!.height).toBeLessThan(actions!.y);
+      const heroOrder = await page.locator(".hero").evaluate((hero) => {
+        const title = hero.querySelector("h1")!.getBoundingClientRect();
+        const actions = hero.querySelector(".actions")!.getBoundingClientRect();
+        return title.bottom < actions.top;
+      });
+      expect(heroOrder).toBe(true);
       for (const name of ar ? ["فاتح", "داكن", "العربية"] : ["Light", "Dark", "Arabic"]) {
         await page.getByRole("button", { name, exact: true }).click();
         const image = page.locator(".showcase-image img");
