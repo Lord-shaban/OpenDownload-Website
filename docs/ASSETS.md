@@ -1,5 +1,30 @@
 # Asset Provenance
 
+## Landing Restoration, October 7, 2026
+
+The landing artwork and original light/dark/Arabic screenshots were restored
+byte-for-byte from revision `d813c89`. Newer journal covers and article figures
+are retained. Complete historical prompts and capture sources are recorded in the
+[original asset manifest](https://github.com/Lord-shaban/OpenDownload-Website/blob/d813c89ddd42af770ac367d20c46a89e9443b7fc/docs/ASSETS.md).
+
+Restored landing assets:
+
+- `coast-editorial.png`: generated lighthouse illustration, 1536x1024.
+- `glass-ribbon.png`: generated glass artwork, 1672x941.
+- `liquid-glass.png`: generated glass artwork, 1672x941.
+- `open-glass.png`: generated glass artwork, 1536x1024.
+- `earthrise-nasa.jpg`: original NASA Lunar Orbiter 1 photograph, 2738x3584.
+  [Source and credit](https://science.nasa.gov/resource/earthrise/);
+  [NASA image usage](https://www.nasa.gov/nasa-brand-center/images-and-media/).
+- `workspace-light.jpg`: native English light capture, 1280x720.
+- `workspace-dark.jpg`: native English dark capture, 1239x873.
+- `workspace-arabic.jpg`: native Arabic/RTL capture, 1239x873.
+
+The historical screenshots were captured on October 1, 2026, using the
+[project-owned sample](https://raw.githubusercontent.com/Lord-shaban/OpenDownload/d187d89cf24eb1908ee0098550d806b9da58dd6a/tests/assets/sample.mp4).
+Restored artwork and screenshots have a separate 10 MB budget; the newer 15
+assets retain their existing 1.7 MB budget. CI checks both sets.
+
 ## Original Editorial Artwork
 
 Six independent images were generated with the built-in `image_gen` tool, with
@@ -7,16 +32,16 @@ Six independent images were generated with the built-in `image_gen` tool, with
 3, 2026; the photo and design studies followed October 4. The originals remain in
 Codex's generated-images directory. Final project assets use WebP quality 86 at
 the original 1536x1024 resolution. No cropping, compositing or UI fabrication was
-performed. The previous glass artwork and test-pattern screenshots were removed.
+performed. The glass artwork and test-pattern screenshots have since been restored.
 
-| Asset in `public/images/`    | Used for                                      |  Bytes |
-| ---------------------------- | --------------------------------------------- | -----: |
-| `media-desk-v2.webp`         | Full-width hero                               | 131178 |
-| `sources-collection-v2.webp` | LinkedIn/Pinterest/Threads article cover      | 268764 |
-| `video-studio-v2.webp`       | Video story and release article cover         | 274478 |
-| `audio-studio-v2.webp`       | Audio story                                   | 163594 |
-| `photo-studio-v2.webp`       | Image story and source article body           | 299858 |
-| `design-desk-v2.webp`        | Self-hosting section and design article cover | 146118 |
+| Asset in `public/images/`    | Used for                                 |  Bytes |
+| ---------------------------- | ---------------------------------------- | -----: |
+| `media-desk-v2.webp`         | Retained editorial hero asset            | 131178 |
+| `sources-collection-v2.webp` | LinkedIn/Pinterest/Threads article cover | 268764 |
+| `video-studio-v2.webp`       | Release article cover                    | 274478 |
+| `audio-studio-v2.webp`       | Retained editorial audio asset           | 163594 |
+| `photo-studio-v2.webp`       | Source article body                      | 299858 |
+| `design-desk-v2.webp`        | Design article cover                     | 146118 |
 
 Artwork illustrates creative media and is not evidence of downloaded content.
 The real application is shown only in the separately captured screenshots below.
@@ -57,8 +82,8 @@ Native JPEG outputs are retained without editing or compositing. Screenshot
 dimensions are the returned bitmap dimensions, not invented device frames.
 Desktop captures are 1065x927; phone captures are 375x811. The screenshots are
 viewport captures, not claims that every part of the document fits in one screen.
-The product preview uses `<picture>` to show actual phone captures on small
-screens instead of squeezing a desktop interface into an unreadable thumbnail.
+These newer captures remain available for documentation and article figures.
+The restored landing preview instead uses the original light/dark/Arabic captures.
 
 | Capture                          | State                                                      |
 | -------------------------------- | ---------------------------------------------------------- |

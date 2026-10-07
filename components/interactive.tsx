@@ -2,18 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import {
-  Check,
-  Copy,
-  Moon,
-  Sun,
-  Search,
-  ArrowUpRight,
-  Film,
-  Music2,
-  ImageIcon,
-  Languages,
-} from "lucide-react";
+import { Check, Copy, Moon, Sun, Search, ArrowUpRight } from "lucide-react";
 import { href, text, type Locale } from "@/lib/site";
 
 export function ThemeToggle({ locale }: { locale: Locale }) {
@@ -35,6 +24,25 @@ export function ThemeToggle({ locale }: { locale: Locale }) {
       <Moon className="moon" size={18} aria-hidden="true" />
     </button>
   );
+}
+
+export function Motion() {
+  useEffect(() => {
+    if (!window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+  return null;
 }
 
 export function CopyCode({ code, locale }: { code: string; locale: Locale }) {
@@ -98,107 +106,83 @@ export function Showcase({ locale }: { locale: Locale }) {
   const [view, setView] = useState(0);
   const views = [
     {
-      name: text(locale, "Video", "فيديو"),
-      icon: Film,
-      src: "/images/workspace-video-v2.jpg",
-      mobile: "/images/workspace-video-mobile-v2.jpg",
-      width: 1065,
-      height: 927,
+      name: text(locale, "Light", "فاتح"),
+      src: "/images/workspace-light.jpg",
+      width: 1280,
+      height: 720,
       alt: text(
         locale,
-        "Actual OpenDownload workspace with a public Threads video and its available format",
-        "واجهة OpenDownload الحقيقية تعرض فيديو Threads عامًا وصيغته المتاحة"
+        "Actual OpenDownload v0.1 light workspace",
+        "مساحة عمل OpenDownload 0.1 الحقيقية بالمظهر الفاتح"
       ),
-      caption: text(locale, "A public post. Its actual format.", "منشور عام. وصيغته الفعلية."),
     },
     {
-      name: text(locale, "Audio", "صوت"),
-      icon: Music2,
-      src: "/images/workspace-audio-v2.jpg",
-      mobile: "/images/workspace-audio-mobile-v2.jpg",
-      width: 1065,
-      height: 927,
+      name: text(locale, "Dark", "داكن"),
+      src: "/images/workspace-dark.jpg",
+      width: 1239,
+      height: 873,
       alt: text(
         locale,
-        "Actual OpenDownload workspace selecting MP3 audio from a public LinkedIn video",
-        "واجهة OpenDownload الحقيقية تعرض اختيار MP3 من فيديو LinkedIn عام"
+        "Actual dark workspace analyzing an owned sample video",
+        "مساحة العمل الحقيقية الداكنة أثناء تحليل فيديو تجريبي مملوك"
       ),
-      caption: text(locale, "Keep the audio. Convert to MP3.", "احفظ الصوت. وحوّله إلى MP3."),
-    },
-    {
-      name: text(locale, "Images", "صور"),
-      icon: ImageIcon,
-      src: "/images/workspace-images-v2.jpg",
-      mobile: "/images/workspace-images-mobile-v2.jpg",
-      width: 1065,
-      height: 927,
-      alt: text(
-        locale,
-        "Actual OpenDownload workspace selecting an original WebP image from a public project URL",
-        "واجهة OpenDownload الحقيقية تعرض اختيار صورة WebP أصلية من رابط عام للمشروع"
-      ),
-      caption: text(locale, "The original image. The actual file.", "الصورة الأصلية. والملف نفسه."),
     },
     {
       name: text(locale, "Arabic", "العربية"),
-      icon: Languages,
-      src: "/images/workspace-arabic-v2.jpg",
-      mobile: "/images/workspace-arabic-mobile-v2.jpg",
-      width: 1065,
-      height: 927,
+      src: "/images/workspace-arabic.jpg",
+      width: 1239,
+      height: 873,
       alt: text(
         locale,
-        "Actual Arabic right-to-left OpenDownload workspace in dark mode",
-        "مساحة عمل OpenDownload العربية الحقيقية باتجاه RTL والمظهر الداكن"
+        "Actual Arabic right-to-left workspace analyzing the same owned sample",
+        "مساحة العمل العربية الحقيقية باتجاه RTL أثناء تحليل نفس العينة المملوكة"
       ),
-      caption: text(locale, "A workspace that speaks your language.", "مساحة عمل تتحدث لغتك."),
     },
   ];
   return (
     <figure className="showcase reveal" id="preview">
-      <div className="showcase-tabs">
-        <div
-          className="preview-switch"
-          role="group"
-          aria-label={text(locale, "Product workflows", "مسارات الاستخدام")}
-        >
-          {views.map((item, i) => (
-            <button key={item.src} aria-pressed={view === i} onClick={() => setView(i)}>
-              <item.icon size={15} aria-hidden="true" />
-              {item.name}
-            </button>
-          ))}
-        </div>
+      <div className="showcase-toolbar">
+        <span className="window-dots" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="showcase-address" dir="ltr">
+          OpenDownload <span>/ workspace</span>
+        </span>
         <a
           href={views[view].src}
           target="_blank"
           rel="noopener noreferrer"
-          className="screenshot-link"
           aria-label={text(locale, "Open full screenshot", "فتح السكرين كاملة")}
         >
           <ArrowUpRight size={17} aria-hidden="true" />
         </a>
       </div>
       <div className="showcase-image" data-view={view}>
-        <picture>
-          <source media="(max-width: 600px)" srcSet={views[view].mobile} />
-          <Image
-            key={views[view].src}
-            src={views[view].src}
-            alt={views[view].alt}
-            width={views[view].width}
-            height={views[view].height}
-            sizes="(max-width: 800px) 94vw, 1200px"
-            unoptimized
-          />
-        </picture>
+        <Image
+          key={views[view].src}
+          src={views[view].src}
+          alt={views[view].alt}
+          width={views[view].width}
+          height={views[view].height}
+          sizes="(max-width: 800px) 94vw, 1000px"
+          preload={view === 0}
+        />
       </div>
       <figcaption>
-        <div>
-          <strong>{views[view].caption}</strong>
-          {text(locale, "The live workspace", "مساحة العمل الفعلية")}
+        <div
+          className="preview-switch"
+          role="group"
+          aria-label={text(locale, "Screenshot appearance", "مظهر السكرين")}
+        >
+          {views.map((item, i) => (
+            <button key={item.src} aria-pressed={view === i} onClick={() => setView(i)}>
+              {item.name}
+            </button>
+          ))}
         </div>
-        <span>OpenDownload · {text(locale, "October 2026", "أكتوبر 2026")}</span>
+        <span>{text(locale, "Real interface · v0.1.0", "الواجهة الحقيقية · 0.1.0")}</span>
       </figcaption>
     </figure>
   );

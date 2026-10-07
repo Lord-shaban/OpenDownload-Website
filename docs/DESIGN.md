@@ -1,40 +1,46 @@
 # Product Website Design
 
-## Editorial Refresh, October 2026
+## Previous Landing Restored, October 7, 2026
 
-OpenDownload is presented as a practical tool for keeping public media. The
-website uses white space, charcoal typography, a forest-green action color,
-and original photography-style imagery with red, blue and green accents.
-There are no floating glass objects, gradients, decorative browser frames,
-autoplay, pointer tilt, invented testimonials or usage counts.
+At the owner's request, the landing layout, shared visual tokens, media scene,
+motion behavior and product preview have been restored from `d813c89`, the
+revision immediately before the editorial redesign. This is a presentation
+rollback, not a rollback of supported sources or application documentation.
+
+The restored design uses the original lavender/charcoal palette, glass artwork,
+animated illustrative media scene, source selector, light/dark/Arabic screenshots,
+media bento, self-hosting section, journal, FAQ and final action. No invented
+testimonials or usage counts are added.
 
 The wordmark remains `OpenDownload.` in both reading directions. Local Manrope,
 DM Sans and Readex Pro fonts retain their existing licenses. Dark mode has its
-own contrast tokens; the photographic hero retains a light, readable surface.
+own contrast tokens. The original application README and Arabic guide are unchanged.
 
 ## Structure
 
-- A full-width photographic hero identifies the product and opens the real app.
-- The actual workspace appears before the source selector. Preview controls show
-  video, audio, image collections and Arabic using real, uncomposited captures.
+- The original hero and animated illustration open the real app.
+- The source selector precedes the actual workspace. Preview controls show
+  light, dark and Arabic views using the original real, uncomposited captures.
 - Eleven source controls distinguish verified samples from conditional adapters.
-- Three photographic media stories show video, audio and image use cases.
-- Self-hosting, three journal stories, FAQ and the final action remain first-class.
+- The media bento shows video, audio and image use cases.
+- Self-hosting, journal stories, FAQ and the final action use the previous layout.
+- Newer original journal covers and article figures remain available.
 - Documentation, articles, resources and navigation share the same typography,
-  borders and restrained layout. Page sections are not floating cards.
+  shared visual tokens restored from the previous revision.
 
 ## Accessibility And Performance
 
 Native FAQ disclosure and mobile navigation support keyboard input. Source and
 preview controls expose their selected state. Copy commands report success or
 failure. Localized routes preserve the page and reading direction; theme
-preference remains local. Motion is limited to a small hover effect, disabled
-under reduced motion. All content remains visible without an intersection observer.
+preference remains local. The hero animation can be paused, stops offscreen and
+respects reduced motion. Reveal effects use the restored intersection observer.
 
-Generated artwork uses WebP at original 1536x1024 resolution. Product captures
-retain their native JPEG bytes. Images have reserved dimensions, meaningful
-alternative text, responsive sizing and lazy loading below the hero. CI verifies
-image encodings, dimensions, nonblank pixels and a combined asset budget.
+Historical landing artwork and JPEG screenshots were restored byte-for-byte from
+Git. Newer WebP artwork and product captures are retained for the journal,
+documentation and provenance. Their 1.7 MB budget is checked separately from the
+restored historical assets' 10 MB budget. CI checks encodings, dimensions and
+nonblank pixels for both sets.
 
 ## Honest Product Boundaries
 

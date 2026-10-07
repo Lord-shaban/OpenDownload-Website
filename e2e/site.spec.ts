@@ -6,15 +6,23 @@ for (const locale of ["en", "ar"] as const) {
     await page.goto(`/${locale}`);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     await expect(page.locator("html")).toHaveAttribute("dir", ar ? "rtl" : "ltr");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("OpenDownload.");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      ar ? "من رابط عام" : "From a public link"
+    );
     expect(
       await page.locator("main .actions").first().getByRole("link").first().getAttribute("href")
     ).toBe(APP_URL);
     expect(
       await page.locator("main .actions").first().getByRole("link").nth(1).getAttribute("href")
     ).toBe(REPO_URL);
-    await expect(page.locator(".hero-art")).toHaveAttribute("src", /media-desk-v2/);
-    await expect(page.locator(".media-scene")).toHaveCount(0);
+    await expect(page.locator(".media-scene")).toBeVisible();
+    await page
+      .getByRole("button", { name: ar ? "إيقاف الحركة" : "Pause motion", exact: true })
+      .click();
+    await expect(page.locator(".media-scene")).toHaveAttribute("data-paused", "true");
+    await expect(
+      page.getByRole("button", { name: ar ? "تشغيل الحركة" : "Resume motion", exact: true })
+    ).toHaveAttribute("aria-pressed", "true");
     await expect(page.locator(".source-grid button")).toHaveCount(11);
     for (const source of ["linkedin", "pinterest", "threads"]) {
       await page.locator(`.source-${source}`).click();
@@ -33,12 +41,10 @@ for (const locale of ["en", "ar"] as const) {
     await expect(page.locator("#source-detail")).toContainText(
       ar ? "معارض الصور" : "photo galleries"
     );
-    const audio = page.getByRole("button", { name: ar ? "صوت" : "Audio", exact: true });
-    await audio.click();
-    await expect(audio).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /LinkedIn/);
-    await page.getByRole("button", { name: ar ? "صور" : "Images", exact: true }).click();
-    await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /WebP/);
+    const dark = page.getByRole("button", { name: ar ? "داكن" : "Dark", exact: true });
+    await dark.click();
+    await expect(dark).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /owned|مملوك/);
     await page.getByRole("button", { name: ar ? "العربية" : "Arabic", exact: true }).click();
     await expect(page.locator(".showcase-image img")).toHaveAttribute("alt", /Arabic|العربية/);
     await page.locator(".faq-list summary").first().click();
@@ -95,14 +101,10 @@ for (const locale of ["en", "ar"] as const) {
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
         true
       );
-      if (viewport.width <= 600) {
-        const copy = await page.locator(".hero-copy").boundingBox();
-        const art = await page.locator(".hero-art-wrap").boundingBox();
-        expect(copy!.y + copy!.height).toBeLessThanOrEqual(art!.y);
-      }
-      for (const name of ar
-        ? ["فيديو", "صوت", "صور", "العربية"]
-        : ["Video", "Audio", "Images", "Arabic"]) {
+      const title = await page.locator(".hero h1").boundingBox();
+      const actions = await page.locator(".hero .actions").boundingBox();
+      expect(title!.y + title!.height).toBeLessThan(actions!.y);
+      for (const name of ar ? ["فاتح", "داكن", "العربية"] : ["Light", "Dark", "Arabic"]) {
         await page.getByRole("button", { name, exact: true }).click();
         const image = page.locator(".showcase-image img");
         await expect
@@ -114,11 +116,11 @@ for (const locale of ["en", "ar"] as const) {
           )
           .toBe(true);
         const src = await image.evaluate((el) => (el as HTMLImageElement).currentSrc);
-        expect(src.includes("-mobile-v2.jpg")).toBe(viewport.width <= 600);
+        expect(src).toMatch(/workspace-(light|dark|arabic)\.jpg/);
       }
     }
     for (const photo of await page
-      .locator(".media-item img, .journal-card img, .open-photo")
+      .locator(".media-scene img, .media-bento img, .journal-card img, .open-art img")
       .all()) {
       await photo.scrollIntoViewIfNeeded();
       await expect
@@ -167,7 +169,7 @@ for (const locale of ["en", "ar"] as const) {
       await page.locator(".hero h1").evaluate((el) => getComputedStyle(el).animationName)
     ).toBe("none");
     expect(
-      await page.locator(".hero-art").evaluate((el) => getComputedStyle(el).animationName)
+      await page.locator(".scene-photo").evaluate((el) => getComputedStyle(el).animationName)
     ).toBe("none");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true
